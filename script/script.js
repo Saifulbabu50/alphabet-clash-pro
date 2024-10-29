@@ -23,6 +23,11 @@ function handleKeyboardUpEvent(event) {
     // check matched or not
     if (playerPressed === expectedAlphabet) {
         console.log('you win');
+        console.log('you have pressed correctly', expectedAlphabet)
+        // pressed oto color remove
+        removeBackgroundColorById(expectedAlphabet)
+        // oto play
+        continueGame()
     }
     else {
         console.log('you lost')
@@ -34,7 +39,7 @@ document.addEventListener('keyup', handleKeyboardUpEvent)
 function continueGame() {
     // step-1: generate a random alphabet
     const alphabet = getARandomAlphabet();
-    console.log('your randon alphabet', alphabet);
+    // console.log('your randon alphabet', alphabet);
 
     // set randomly generated alphabet to the screen (show it)
     const currentAlphabetElement = document.getElementById('current-alphabet')
