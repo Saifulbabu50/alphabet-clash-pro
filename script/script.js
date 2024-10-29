@@ -23,18 +23,39 @@ function handleKeyboardUpEvent(event) {
     // check matched or not
     if (playerPressed === expectedAlphabet) {
         console.log('you win');
-        console.log('you have pressed correctly', expectedAlphabet)
+        // update score:
+        // 1.get the current score
+        const currentScoreElement = document.getElementById('current-score');
+        const currentScoreText = currentScoreElement.innerText;
+        const currentScore = parseFloat(currentScoreText);
+        console.log('the score', currentScore)
+
+        // 2.increase the score by1
+        const newScore = currentScore + 1;
+
+        // 3.show the updated score
+        currentScoreElement.innerText = newScore;
+
         // pressed oto color remove
-        removeBackgroundColorById(expectedAlphabet)
+        // start a new round
+        removeBackgroundColorById(expectedAlphabet);
         // oto play
         continueGame()
     }
     else {
-        console.log('you lost')
+        console.log('you lost');
+        // step-1: get the current life number
+        const currentLifeElement = document.getElementById('current-life');
+        const currentLifeText = currentLifeElement.innerText;
+        const currentLife = parseFloat(currentLifeText)
+        // step-2:reduce the life count
+        const newLife = currentLife - 1;
+        // step-3: display the updated life count
+        currentLifeElement.innerText = newLife;
     }
 }
 // capture keyboard key press
-document.addEventListener('keyup', handleKeyboardUpEvent)
+document.addEventListener('keyup', handleKeyboardUpEvent);
 
 function continueGame() {
     // step-1: generate a random alphabet
