@@ -14,11 +14,16 @@ function handleKeyboardUpEvent(event) {
     const playerPressed = event.key;
     console.log('button pressd', playerPressed);
 
+    // stop the game if pressed 'Esc'
+    if (playerPressed === 'Escaped') {
+        gameOver()
+    }
+
     // get the expected press
     const currentAlphabetElement = document.getElementById('current-alphabet');
     const currentAlphabet = currentAlphabetElement.innerText;
     const expectedAlphabet = currentAlphabet.toLowerCase();
-    console.log(playerPressed, expectedAlphabet);
+    // console.log(playerPressed, expectedAlphabet);
 
     // check matched or not
     if (playerPressed === expectedAlphabet) {
@@ -39,7 +44,7 @@ function handleKeyboardUpEvent(event) {
         // console.log('the score', currentScore)
 
         // // 2.increase the score by1
-        // const newScore = currentScore + 1;
+        const newScore = currentScore + 1;
 
         // // 3.show the updated score
         // currentScoreElement.innerText = newScore;
@@ -48,14 +53,17 @@ function handleKeyboardUpEvent(event) {
         // // start a new round
         removeBackgroundColorById(expectedAlphabet);
         // oto play
-        continueGame()
+        continueGame();
     }
     else {
         console.log('you lost');
 
         const currentLife = getTextElementValueById('current-life');
         const updateLife = currentLife - 1;
-        setTextElementValueById('current-life', updateLife)
+        setTextElementValueById('current-life', updateLife);
+        if (updateLife === 0) {
+            gameOver();
+        }
 
 
 
@@ -82,12 +90,40 @@ function continueGame() {
     const currentAlphabetElement = document.getElementById('current-alphabet')
     currentAlphabetElement.innerText = alphabet;
 
+    // set buton bg color
     setBackgroundColorById(alphabet);
+
+
 }
 
 
 function play() {
+    // hide everything show only playground
     hideElementById('home-screen');
+    hideElementById('final-score');
     showElementById('play-ground');
+
+    // reset score and life
+    setTextElementValueById('current-life', 5);
+    setTextElementValueById('current-score', 0);
+
     continueGame();
+}
+
+function gameOver() {
+    hideElementById('play-ground');
+    showElementById('final-score');
+    // update final score
+    // step-1: get the final score
+    const lastScore = getTextElementValueById('current-score');
+    console.log(lastScore);
+    setTextElementValueById('last-score', lastScore);
+
+    
+
+    // clear the last selected alphabet highlight
+    const currentAlphabet = getElementTextById('current-alphabet');
+    // console.log(currentAlphabet);
+    removeBackgroundColorById(currentAlphabet);
+
 }
